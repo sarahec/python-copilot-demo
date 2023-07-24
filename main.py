@@ -6,6 +6,7 @@ import time
 import random
 import matplotlib.pyplot as plt
 
+
 def quicksort(values):
     """Sorts a list of values using the quicksort algorithm."""
     if len(values) <= 1:
@@ -20,6 +21,7 @@ def quicksort(values):
             greater_than_pivot.append(value)
     return quicksort(less_than_pivot) + [pivot] + quicksort(greater_than_pivot)
 
+
 def bubblesort(values):
     """Sorts a list of values using the bubblesort algorithm."""
     for i in range(len(values)):
@@ -27,6 +29,7 @@ def bubblesort(values):
             if values[j] > values[j + 1]:
                 values[j], values[j + 1] = values[j + 1], values[j]
     return values
+
 
 def mergesort(values):
     """Sorts a list of values using the mergesort algorithm."""
@@ -38,6 +41,7 @@ def mergesort(values):
     left = mergesort(left)
     right = mergesort(right)
     return merge(left, right)
+
 
 def merge(left, right):
     """Merges two sorted lists into a single sorted list."""
@@ -53,6 +57,7 @@ def merge(left, right):
         result.extend(right)
     return result
 
+
 def benchmark(sorting_algorithm, values_length=1024, number_of_runs=1000):
     """Times how long it takes to sort a list of values."""
     total_time = 0
@@ -64,20 +69,24 @@ def benchmark(sorting_algorithm, values_length=1024, number_of_runs=1000):
         total_time += end - start
     return total_time / number_of_runs
 
+
 def plot_results():
-    """Benchmark all three sorting algorithms at 1000 runs and plot the results."""  
-    values_lengths = [1000]
-    sorting_algorithms = [quicksort, bubblesort, mergesort]
+    """Benchmark all three sorting algorithms at 10, 50 and 100 runs and plot the results."""
+    values_lengths = [10, 50, 100, 500]
+    sorting_algorithms = [bubblesort, mergesort, quicksort]
     for sorting_algorithm in sorting_algorithms:
         times = []
         for values_length in values_lengths:
             times.append(benchmark(sorting_algorithm, values_length))
         plt.plot(values_lengths, times, label=sorting_algorithm.__name__)
+
+    # Plot the results on a log scale.
+    plt.yscale('log')
     plt.legend()
     plt.xlabel('Number of values')
     plt.ylabel('Time (seconds)')
     plt.show()
 
+
 if __name__ == '__main__':
     plot_results()
-
